@@ -11,8 +11,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'Emotion Tracker',
-        short_name: 'Emotions',
+        name: 'Мои эмоции',
+        short_name: 'Мои эмоции',
         description: 'Track your daily emotions and analyze your mood',
         theme_color: '#18181b',
         background_color: '#18181b',
