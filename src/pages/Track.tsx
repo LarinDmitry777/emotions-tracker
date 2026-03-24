@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { EMOTION_CATEGORIES, CYCLE_PHASES } from '../types';
+import { Check } from 'lucide-react';
 import { useEmotions } from '../hooks/useEmotions';
 
 const getLocalDateString = () => {
@@ -110,8 +111,8 @@ export function Track() {
         />
       </div>
 
-      <button className="btn btn-primary" onClick={handleSave}>
-        Сохранить день
+      <button className="save-btn-fixed" onClick={handleSave} aria-label="Сохранить день">
+        <Check size={28} strokeWidth={2.5} />
       </button>
     </div>
   );

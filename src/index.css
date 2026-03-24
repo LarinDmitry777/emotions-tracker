@@ -319,3 +319,30 @@ body {
   0% { opacity: 0; transform: translate(-50%, -30px); }
   100% { opacity: 1; transform: translate(-50%, 0); }
 }
+
+.save-btn-fixed {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  width: 52px;
+  height: 52px;
+  border-radius: 26px;
+  background-color: var(--accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px var(--accent-glow);
+  z-index: 900;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.save-btn-fixed:hover {
+  transform: scale(1.05);
+}
+
+.save-btn-fixed:active {
+  transform: scale(0.95);
+}
