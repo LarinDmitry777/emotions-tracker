@@ -133,6 +133,9 @@ body {
   margin-bottom: 32px;
 }
 .category-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 16px;

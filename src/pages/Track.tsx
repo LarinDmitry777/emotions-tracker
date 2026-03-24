@@ -1,7 +1,15 @@
 import { useState, useEffect } from 'react';
 import { EMOTION_CATEGORIES, CYCLE_PHASES } from '../types';
-import { Check } from 'lucide-react';
+import { Check, Flame, CloudLightning, CloudRain, Sun, Heart, Moon, PenLine } from 'lucide-react';
 import { useEmotions } from '../hooks/useEmotions';
+
+const CATEGORY_ICONS = {
+  'ГНЕВ': <Flame size={18} />,
+  'СТРАХ': <CloudLightning size={18} />,
+  'ГРУСТЬ': <CloudRain size={18} />,
+  'РАДОСТЬ': <Sun size={18} />,
+  'ЛЮБОВЬ': <Heart size={18} />
+};
 
 const getLocalDateString = () => {
   const date = new Date();
@@ -62,13 +70,16 @@ export function Track() {
         </div>
       )}
       <header className="header">
-        <h1>Твои эмоции</h1>
+        <h1>Что я сегодня чувствовала?</h1>
         <p style={{ textTransform: 'capitalize' }}>{dateDisplay}</p>
       </header>
 
       {Object.entries(EMOTION_CATEGORIES).map(([category, emotions]) => (
         <div key={category} className="category-section">
-          <div className="category-title">{category}</div>
+          <div className="category-title">
+            {CATEGORY_ICONS[category as keyof typeof CATEGORY_ICONS]}
+            {category}
+          </div>
           <div className="chips-container">
             {emotions.map(emotion => {
               const isSelected = selectedEmotions.has(emotion);
@@ -87,7 +98,10 @@ export function Track() {
       ))}
 
       <div className="category-section">
-        <div className="category-title">ФАЗА ЦИКЛА</div>
+        <div className="category-title">
+          <Moon size={18} />
+          ФАЗА ЦИКЛА
+        </div>
         <div className="chips-container">
           {CYCLE_PHASES.map(phase => (
             <div 
@@ -102,7 +116,10 @@ export function Track() {
       </div>
 
       <div className="category-section">
-        <div className="category-title">ЗАМЕТКА</div>
+        <div className="category-title">
+          <PenLine size={18} />
+          ЗАМЕТКА
+        </div>
         <textarea 
           className="input-field" 
           placeholder="Что повлияло на ваши эмоции сегодня?"
