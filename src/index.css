@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg-color: #0f0f13;
+  --bg-color: #0b0f19;
+  --bg-gradient: linear-gradient(160deg, #2b1442 0%, #17102b 45%, #0d1226 100%);
   --bg-card: rgba(255, 255, 255, 0.03);
   --bg-card-hover: rgba(255, 255, 255, 0.08);
   --text-primary: #ffffff;
@@ -28,9 +29,33 @@
   padding: 0;
 }
 
+html {
+  background-color: #2b1442;
+}
+
 body {
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: var(--bg-color);
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.15) 1px, transparent 1.5px),
+    radial-gradient(circle at 75% 20%, rgba(255, 255, 255, 0.2) 1px, transparent 1.5px),
+    radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.1) 1.5px, transparent 2px),
+    radial-gradient(circle at 85% 65%, rgba(255, 255, 255, 0.25) 1px, transparent 1.5px),
+    radial-gradient(circle at 25% 90%, rgba(255, 255, 255, 0.1) 1px, transparent 1.5px),
+    radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.15) 1.5px, transparent 2px),
+    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.12) 2px, transparent 2.5px),
+    var(--bg-gradient);
+  background-position: 
+    0 calc(var(--scroll-y, 0px) * -0.15),
+    0 calc(var(--scroll-y, 0px) * -0.35),
+    0 calc(var(--scroll-y, 0px) * -0.55),
+    0 calc(var(--scroll-y, 0px) * -0.25),
+    0 calc(var(--scroll-y, 0px) * -0.45),
+    0 calc(var(--scroll-y, 0px) * -0.65),
+    0 calc(var(--scroll-y, 0px) * -0.05),
+    0 0;
+  background-size: 120px 120px, 150px 150px, 200px 200px, 180px 180px, 140px 140px, 250px 250px, 300px 300px, 100% 100%;
+  background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
