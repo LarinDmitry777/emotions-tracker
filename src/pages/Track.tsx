@@ -122,7 +122,7 @@ export function Track() {
         </div>
         <textarea 
           className="input-field" 
-          placeholder="Что повлияло на ваши эмоции сегодня?"
+          placeholder="Что повлияло на мои эмоции сегодня?"
           value={note}
           onChange={(e) => setNote(e.target.value)}
         />
