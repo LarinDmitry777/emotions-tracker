@@ -163,6 +163,11 @@ body {
   border-color: rgba(255, 255, 255, 0.1);
 }
 .chip:active { transform: scale(0.95); }
+.chip-sm {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 16px;
+}
 
 /* Selected Category Styles */
 .chip.selected.cat-ГНЕВ { background: var(--cat-gnev-light); color: var(--cat-gnev); border-color: var(--cat-gnev); }

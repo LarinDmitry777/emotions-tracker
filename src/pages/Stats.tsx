@@ -52,10 +52,9 @@ export function Stats() {
       </header>
 
       <div className="category-section" style={{ marginBottom: '24px' }}>
-        <div className="chips-container" style={{ overflowX: 'auto', flexWrap: 'nowrap', paddingBottom: '8px' }}>
+        <div className="chips-container" style={{ flexWrap: 'wrap', gap: '8px', paddingBottom: '8px', justifyContent: 'center' }}>
           <div 
-            className={`chip ${filterPhase === 'ALL' ? 'selected cat-ЛЮБОВЬ' : ''}`}
-            style={{flexShrink: 0}}
+            className={`chip chip-sm ${filterPhase === 'ALL' ? 'selected cat-ЛЮБОВЬ' : ''}`}
             onClick={() => setFilterPhase('ALL')}
           >
             Все дни
@@ -63,8 +62,7 @@ export function Stats() {
           {CYCLE_PHASES.map(phase => (
             <div 
               key={phase}
-              className={`chip ${filterPhase === phase ? 'selected cat-ЛЮБОВЬ' : ''}`}
-              style={{flexShrink: 0}}
+              className={`chip chip-sm ${filterPhase === phase ? 'selected cat-ЛЮБОВЬ' : ''}`}
               onClick={() => setFilterPhase(phase)}
             >
               {phase}
