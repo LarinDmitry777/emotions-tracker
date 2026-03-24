@@ -52,7 +52,7 @@ export function Stats() {
       </header>
 
       <div className="category-section" style={{ marginBottom: '24px' }}>
-        <div className="chips-container" style={{ flexWrap: 'wrap', gap: '8px', paddingBottom: '8px', justifyContent: 'center' }}>
+        <div className="chips-container" style={{ flexWrap: 'wrap', gap: '8px', paddingBottom: '8px', justifyContent: 'flex-start' }}>
           <div 
             className={`chip chip-sm ${filterPhase === 'ALL' ? 'selected cat-ЛЮБОВЬ' : ''}`}
             onClick={() => setFilterPhase('ALL')}
