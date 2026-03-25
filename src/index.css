@@ -14,13 +14,13 @@
   --cat-strah: #ff9500;
   --cat-grust: #007aff;
   --cat-radost: #34c759;
-  --cat-lubov: #ff2d55;
+  --cat-lubov: #ff69b4;
   
   --cat-gnev-light: rgba(255, 59, 48, 0.15);
   --cat-strah-light: rgba(255, 149, 0, 0.15);
   --cat-grust-light: rgba(0, 122, 255, 0.15);
   --cat-radost-light: rgba(52, 199, 89, 0.15);
-  --cat-lubov-light: rgba(255, 45, 85, 0.15);
+  --cat-lubov-light: rgba(255, 105, 180, 0.15);
 }
 
 * {
