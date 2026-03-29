@@ -200,6 +200,7 @@ body {
 .chip.selected.cat-ГРУСТЬ { background: var(--cat-grust-light); color: var(--cat-grust); border-color: var(--cat-grust); }
 .chip.selected.cat-РАДОСТЬ { background: var(--cat-radost-light); color: var(--cat-radost); border-color: var(--cat-radost); }
 .chip.selected.cat-ЛЮБОВЬ { background: var(--cat-lubov-light); color: var(--cat-lubov); border-color: var(--cat-lubov); }
+.chip.selected.selected-cycle { background: rgba(255, 255, 255, 0.1); color: #ffffff; border-color: rgba(255, 255, 255, 0.6); }
 
 /* History List */
 .history-list {

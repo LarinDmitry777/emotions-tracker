@@ -106,7 +106,7 @@ export function Track() {
           {CYCLE_PHASES.map(phase => (
             <div 
               key={phase}
-              className={`chip ${cyclePhase === phase ? 'selected cat-ЛЮБОВЬ' : ''}`}
+              className={`chip ${cyclePhase === phase ? 'selected selected-cycle' : ''}`}
               onClick={() => setCyclePhase(cyclePhase === phase ? undefined : phase)}
             >
               {phase}
