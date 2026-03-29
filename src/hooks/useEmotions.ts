@@ -41,5 +41,20 @@ export function useEmotions() {
     await loadLogs();
   };
 
-  return { logs, loading, saveDay, removeLog, getLogById, reload: loadLogs };
+  const changeDate = async (oldDate: string, newDate: string) => {
+    const existingLog = await getLogById(oldDate);
+    if (!existingLog) return;
+    
+    const newLog: DailyLog = {
+      ...existingLog,
+      id: newDate,
+      date: newDate,
+    };
+    
+    await addDailyLog(newLog);
+    await deleteLog(oldDate);
+    await loadLogs();
+  };
+
+  return { logs, loading, saveDay, removeLog, changeDate, getLogById, reload: loadLogs };
 }

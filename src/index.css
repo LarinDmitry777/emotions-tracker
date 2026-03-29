@@ -379,3 +379,136 @@ body {
 .save-btn-fixed:active {
   transform: scale(0.95);
 }
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 24px;
+}
+
+.modal-content {
+  background: #17102b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+}
+.close-btn:hover { color: white; }
+
+/* Calendar Overrides */
+.rdp-root {
+  --rdp-cell-size: 44px;
+  --rdp-accent-color: var(--accent);
+  --rdp-background-color: var(--bg-card);
+  --rdp-accent-color-dark: var(--accent);
+  --rdp-background-color-dark: var(--bg-card);
+  --rdp-outline: 2px solid var(--accent);
+  --rdp-outline-offset: 2px;
+  --rdp-selected-color: #ffffff;
+  --rdp-day_button-border-radius: 50%;
+  margin: 0;
+  font-family: inherit;
+  color: white;
+}
+
+.rdp-month_caption {
+  position: relative;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-height: 48px;
+  width: 100%;
+}
+
+.rdp-caption_label {
+  z-index: 1;
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.rdp-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  pointer-events: none;
+}
+
+.rdp-nav_button {
+  pointer-events: auto;
+  color: white !important;
+  background: none !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.rdp-chevron {
+  fill: white !important;
+  stroke: white !important;
+}
+
+.rdp-day_button {
+  color: white;
+  border-radius: 50%;
+}
+.rdp-day_button:hover {
+  background-color: var(--bg-card-hover);
+}
+
+.rdp-today .rdp-day_button {
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.rdp-selected .rdp-day_button {
+  background-color: var(--accent) !important;
+  color: white !important;
+}
+
+.rdp-disabled .rdp-day_button {
+  color: rgba(255, 255, 255, 0.2);
+  cursor: not-allowed;
+}
+
