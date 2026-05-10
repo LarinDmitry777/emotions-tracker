@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useEmotions } from '../hooks/useEmotions';
 import { EMOTION_CATEGORIES } from '../types';
 import { Trash2, Calendar, X, Download, Plus } from 'lucide-react';
@@ -22,7 +23,21 @@ export function History() {
   const [tempSelectedDate, setTempSelectedDate] = useState<Date | undefined>(undefined);
   const [pendingImport, setPendingImport] = useState<DailyLog[] | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
+  const [highlightedId, setHighlightedId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const location = useLocation();
+  const focusDate = (location.state as { focusDate?: string } | null)?.focusDate ?? null;
+
+  useEffect(() => {
+    if (loading || !focusDate) return;
+    const el = itemRefs.current.get(focusDate);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setHighlightedId(focusDate);
+    const t = setTimeout(() => setHighlightedId(null), 1800);
+    return () => clearTimeout(t);
+  }, [focusDate, loading, logs.length]);
 
   const handleExport = () => {
     if (logs.length === 0) return;
@@ -113,7 +128,14 @@ export function History() {
             const dateDisplay = dateObj.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric', month: 'long' });
             
             return (
-              <div key={log.id} className="glass-panel history-item">
+              <div
+                key={log.id}
+                ref={(el) => {
+                  if (el) itemRefs.current.set(log.id, el);
+                  else itemRefs.current.delete(log.id);
+                }}
+                className={`glass-panel history-item${highlightedId === log.id ? ' history-item--highlighted' : ''}`}
+              >
                 <div className="history-item-header">
                   <div className="history-item-date">
                     {dateDisplay}
