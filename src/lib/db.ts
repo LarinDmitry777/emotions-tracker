@@ -45,3 +45,15 @@ export const deleteLog = async (id: string) => {
   const db = await initDB();
   return db.delete('dailyLogs', id);
 };
+
+export const bulkPutLogs = async (entries: DailyLog[]) => {
+  const db = await initDB();
+  const tx = db.transaction('dailyLogs', 'readwrite');
+  await Promise.all(entries.map(e => tx.store.put(e)));
+  await tx.done;
+};
+
+export const clearAllLogs = async () => {
+  const db = await initDB();
+  return db.clear('dailyLogs');
+};

@@ -245,6 +245,22 @@ body {
 }
 .delete-btn:hover { color: var(--cat-gnev); }
 
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+.icon-btn:hover { background: var(--bg-card-hover); }
+.icon-btn:active { transform: scale(0.94); }
+.icon-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
 .history-item-note {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.8);

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { DailyLog } from '../types';
-import { addDailyLog, getAllLogs, deleteLog, getLogById } from '../lib/db';
+import { addDailyLog, getAllLogs, deleteLog, getLogById, bulkPutLogs, clearAllLogs } from '../lib/db';
 
 export function useEmotions() {
   const [logs, setLogs] = useState<DailyLog[]>([]);
@@ -56,5 +56,13 @@ export function useEmotions() {
     await loadLogs();
   };
 
-  return { logs, loading, saveDay, removeLog, changeDate, getLogById, reload: loadLogs };
+  const importLogs = async (entries: DailyLog[], mode: 'merge' | 'replace') => {
+    if (mode === 'replace') {
+      await clearAllLogs();
+    }
+    await bulkPutLogs(entries);
+    await loadLogs();
+  };
+
+  return { logs, loading, saveDay, removeLog, changeDate, getLogById, importLogs, reload: loadLogs };
 }

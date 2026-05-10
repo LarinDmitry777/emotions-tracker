@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useEmotions } from '../hooks/useEmotions';
 import { EMOTION_CATEGORIES } from '../types';
-import { Trash2, Calendar, X } from 'lucide-react';
+import { Trash2, Calendar, X, Download, Plus } from 'lucide-react';
 import { DayPicker } from 'react-day-picker';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
+import { downloadExport, parseImport } from '../lib/exportImport';
+import type { DailyLog } from '../types';
 
 // Helper to determine category of an emotion
 const getCategoryByEmotion = (emotion: string): string => {
@@ -15,9 +17,41 @@ const getCategoryByEmotion = (emotion: string): string => {
 };
 
 export function History() {
-  const { logs, loading, removeLog, changeDate } = useEmotions();
+  const { logs, loading, removeLog, changeDate, importLogs } = useEmotions();
   const [editingDateFor, setEditingDateFor] = useState<string | null>(null);
   const [tempSelectedDate, setTempSelectedDate] = useState<Date | undefined>(undefined);
+  const [pendingImport, setPendingImport] = useState<DailyLog[] | null>(null);
+  const [importError, setImportError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleExport = () => {
+    if (logs.length === 0) return;
+    downloadExport(logs);
+  };
+
+  const handlePickFile = () => {
+    setImportError(null);
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const entries = parseImport(text);
+      setPendingImport(entries);
+    } catch (err) {
+      setImportError(err instanceof Error ? err.message : 'Не удалось прочитать файл');
+    }
+  };
+
+  const runImport = async (mode: 'merge' | 'replace') => {
+    if (!pendingImport) return;
+    await importLogs(pendingImport, mode);
+    setPendingImport(null);
+  };
 
   const handleOpenEdit = (logId: string) => {
     setEditingDateFor(logId);
@@ -31,8 +65,41 @@ export function History() {
   return (
     <div className="container" style={{ paddingBottom: '100px' }}>
       <header className="header" style={{ textAlign: 'left' }}>
-        <h1>История</h1>
-        <p>Ваши ежедневные записи</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+          <div>
+            <h1>История</h1>
+            <p>Ваши ежедневные записи</p>
+          </div>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button
+              className="btn icon-btn"
+              onClick={handlePickFile}
+              title="Импорт из файла"
+              aria-label="Импорт из файла"
+            >
+              <Plus size={20} />
+            </button>
+            <button
+              className="btn icon-btn"
+              onClick={handleExport}
+              disabled={logs.length === 0}
+              title="Экспорт в файл"
+              aria-label="Экспорт в файл"
+            >
+              <Download size={20} />
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="application/json,.json"
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+            />
+          </div>
+        </div>
+        {importError && (
+          <p style={{ color: 'var(--cat-gnev)', marginTop: '12px' }}>{importError}</p>
+        )}
       </header>
 
       {logs.length === 0 ? (
@@ -117,6 +184,42 @@ export function History() {
               }}
             >
               Сохранить
+            </button>
+          </div>
+        </div>
+      )}
+
+      {pendingImport && (
+        <div className="modal-overlay" onClick={() => setPendingImport(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2 className="modal-title">Импорт записей</h2>
+              <button className="btn close-btn" onClick={() => setPendingImport(null)}>
+                <X size={24} />
+              </button>
+            </div>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>
+              Найдено записей в файле: {pendingImport.length}.
+              <br />
+              Выберите, как объединить с текущими данными.
+            </p>
+            <button
+              className="btn btn-primary"
+              style={{ marginTop: 0, marginBottom: '12px' }}
+              onClick={() => runImport('merge')}
+            >
+              Добавить (перезаписать совпадающие даты)
+            </button>
+            <button
+              className="btn btn-primary"
+              style={{ marginTop: 0, marginBottom: 0, background: 'var(--cat-gnev)', boxShadow: 'none' }}
+              onClick={() => {
+                if (confirm('Все текущие записи будут удалены. Продолжить?')) {
+                  runImport('replace');
+                }
+              }}
+            >
+              Заменить всё
             </button>
           </div>
         </div>
